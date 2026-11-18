@@ -1,0 +1,75 @@
+{
+  "name": "Vapi painting calls → email",
+  "flow": [
+    {
+      "id": 1,
+      "mapper": {},
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "vapi painting calls"
+        }
+      },
+      "parameters": {
+        "hook": "<MAKE_WEBHOOK_ID>",
+        "maxResults": 1
+      }
+    },
+    {
+      "id": 2,
+      "filter": {
+        "name": "Only end-of-call reports",
+        "conditions": [
+          [
+            {
+              "a": "{{1.message.type}}",
+              "b": "end-of-call-report",
+              "o": "text:equal"
+            }
+          ]
+        ]
+      },
+      "mapper": {
+        "to": [
+          "<OWNER_EMAIL>"
+        ],
+        "content": "<h2>New call from {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.caller_name}}</h2><p><b>Call back:</b> <a href=\"tel:{{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.callback_number}}\">{{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.callback_number}}</a><br><b>Best time:</b> {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.best_callback_time}}</p><p><b>Project:</b> {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.project_type}} - {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.project_details}}<br><b>Where:</b> {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.address_or_town}}<br><b>When:</b> {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.timeline}}<br><b>Found us:</b> {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.heard_about_us}}</p><p><b>Call type:</b> {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.call_type}}<br><b>Urgent:</b> {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.is_urgent}}</p><p><a href=\"{{1.message.recordingUrl}}\">Listen to the call recording</a> (link expires after a while)</p>",
+        "subject": "{{if(1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.is_urgent; \"URGENT: \"; \"New lead: \")}}{{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.caller_name}} - {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.project_type}}, {{1.message.artifact.structuredOutputs.`08e86946-c6a5-4073-9ce7-c7fc88edeb15`.result.address_or_town}}",
+        "bodyType": "rawHtml"
+      },
+      "module": "google-email:sendAnEmail",
+      "version": 4,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "Email the lead"
+        }
+      },
+      "parameters": {
+        "__IMTCONN__": "<GMAIL_CONNECTION_ID>"
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "dlq": false,
+      "dataloss": false,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "roundtrips": 1,
+      "sequential": false,
+      "confidential": false,
+      "freshVariables": false,
+      "autoCommitTriggerLast": true
+    }
+  },
+  "scheduling": {
+    "type": "immediately"
+  }
+}
