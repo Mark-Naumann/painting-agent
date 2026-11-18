@@ -11,10 +11,13 @@ calls a human receptionist would, and emails the owner a clean summary before he
 
 You call Naumann Painting. Sam picks up, sounding like a friendly front-desk person, and:
 
-1. Asks what you need painted, where (town), and when you'd like it done.
+1. Asks, one question at a time, what you need painted (interior, exterior, cabinets,
+   trim, deck…), where (address or town), when you'd like it done, how you heard about
+   the company, and the best time to call you back.
 2. Gets your name and callback number, and **reads the number back in small groups of
    digits** so mistakes get caught on the call.
-3. Tells you Mark will call you back on the next weekday, and ends the call politely.
+3. Recaps your name, number and project in one sentence, says Mark will call back within
+   24 hours for a free estimate, and thanks you.
 
 A few minutes later, Mark gets an email with the lead: name, callback number, project,
 town, timeline, an **urgent** flag, and a link to the call recording.
@@ -26,10 +29,13 @@ town, timeline, an **urgent** flag, and a link to the call recording.
 | "How much will it cost?" | Never quotes a price. Offers a free estimate instead. |
 | "Can I just talk to Mark?" | Stays calm, explains Mark will call back, and collects the details. No fake transfers. |
 | Speaks Spanish | Switches to Spanish and stays in Spanish for the whole call. |
-| Asks something not in the business facts | Doesn't guess. Says Mark can answer that on the callback (no hallucinated answers). |
-| Wrong number, or a non-painting emergency | Points them to the right place and ends the call kindly. |
-| Won't give their name or number | Doesn't push. Records what it can. |
-| Calls on a weekend | Promises a callback on the next weekday, not "today". |
+| Asks something not in the business facts (paint brands, lead paint…) | Doesn't guess. Says Mark will cover that on the callback (no hallucinated answers). |
+| Existing customer with a problem | Apologizes, takes the details, and flags the lead **URGENT**. |
+| Lives outside the service area | Takes their info anyway; Mark will say if he can take it on. |
+| Sales call or vendor | Takes a name and number and ends politely. |
+| Wrong number, or a non-painting emergency | Says so kindly and ends the call. |
+| Won't share details | Doesn't push, but at least gets a name and callback number. |
+| Calls Friday evening or on a weekend | Says Mark will call back the next weekday. |
 
 ## How it works
 

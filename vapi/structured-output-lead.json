@@ -1,0 +1,71 @@
+{
+  "id": "08e86946-c6a5-4073-9ce7-c7fc88edeb15",
+  "orgId": "<ORG_ID>",
+  "name": "painting lead",
+  "type": "ai",
+  "description": "Details about the caller and their painting project, pulled from the call.",
+  "schema": {
+    "type": "object",
+    "required": [
+      "caller_name",
+      "callback_number",
+      "address_or_town",
+      "project_type",
+      "project_details",
+      "timeline",
+      "heard_about_us",
+      "best_callback_time\t",
+      "call_type",
+      "is_urgent"
+    ],
+    "properties": {
+      "timeline": {
+        "description": "When they want the work done",
+        "type": "string"
+      },
+      "call_type": {
+        "description": "Reason for the call",
+        "type": "string"
+      },
+      "is_urgent": {
+        "description": "True if an existing customer has a problem or the caller says it’s urgent",
+        "type": "boolean"
+      },
+      "caller_name": {
+        "description": "Caller’s full name",
+        "type": "string"
+      },
+      "project_type": {
+        "description": "Type of painting work",
+        "type": "string"
+      },
+      "heard_about_us": {
+        "description": "How they found the business",
+        "type": "string"
+      },
+      "address_or_town": {
+        "description": "Address, subdivision, or town of the project",
+        "type": "string"
+      },
+      "callback_number": {
+        "description": "Best phone number to call them back",
+        "type": "string"
+      },
+      "project_details": {
+        "description": "What they want painted (rooms, whole house, cabinets, trim, deck)",
+        "type": "string"
+      },
+      "best_callback_time\t": {
+        "description": "When they prefer a callback",
+        "type": "string"
+      }
+    }
+  },
+  "assistantIds": [
+    "bfcee653-30d7-4581-9a9b-dee7f5dd07ce"
+  ],
+  "workflowIds": [],
+  "createdAt": "2026-11-18T03:40:02.571Z",
+  "updatedAt": "2026-11-18T04:07:08.902Z",
+  "target": "messages"
+}
