@@ -16,7 +16,17 @@
 - Moved from ElevenLabs Flash v2.5 (Vapi humanness rating 67) to Vapi Voices v2 "Clara" (rating 92), at normal speed (1.0) with office background sound.
 - Prompt now tells Sam to use contractions and natural phrases ("sure," "got it," "no problem").
 
-**Integration:** Vapi end-of-call report → Make webhook → lead email (name, callback number, project, town, timeline, urgent flag, recording link). Only end-of-call reports are sent to the webhook, which avoids paying for extra Make runs.
+**v12–v14: phone numbers, one question per turn, "Nawman", call review (Nov 18–19)**
+- Asks exactly ONE question per turn, then waits; never combines questions or answers its own.
+- New phone-number rules: exactly 10 digits (asks only for a missing area code), read back once digit by digit in words, in 3-3-4 groups, then "Is that right?"; the number is confirmed before anything else.
+- Says the company and owner's name as "Nawman" (prompt and greeting).
+- Transcriber custom vocabulary for local names (Naumann, O'Fallon, St. Peters, St. Charles, Wentzville); smart endpointing.
+- Background sound turned off.
+- "Call quality review" structured output attached: every call is scored and reviewed (see call-analyzer).
+
+**Integration:** Vapi end-of-call report → Make webhook → **two emails**: (1) the lead (name, callback number, project, town, timeline, urgent flag, recording link); (2) the call review (score out of 10, rule checks, issues found, suggested prompt fix for a person to review). Only end-of-call reports are sent to the webhook, which avoids paying for extra Make runs.
+
+**Known Vapi issue (Nov 19):** publishing from the assistant editor silently detaches structured outputs that were attached from the structured output's own page. Caught by a blank review email; workaround: re-attach after each publish.
 
 ## Automated tests (Vapi Evals, AI-judged). All passed Nov 18.
 

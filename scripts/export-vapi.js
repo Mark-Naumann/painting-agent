@@ -15,12 +15,13 @@
 
 const fs = require('fs');
 const path = require('path');
-const { redact, findOrgIds } = require('./redact');
+const { redact, findOrgIds, findTransferNumbers } = require('./redact');
 
 // ---- What to export for THIS project ---------------------------------------
 const ITEMS = [
   { type: 'assistant', id: 'bfcee653-30d7-4581-9a9b-dee7f5dd07ce', file: 'assistant-sam.json' },
   { type: 'structured-output', id: '08e86946-c6a5-4073-9ce7-c7fc88edeb15', file: 'structured-output-lead.json' },
+  { type: 'structured-output', id: 'c80a84f4-ead7-4c67-8da8-c951c2474816', file: 'structured-output-call-quality-review.json' },
 ];
 // ----------------------------------------------------------------------------
 
@@ -67,10 +68,22 @@ async function main() {
   fs.mkdirSync(path.join(ROOT, 'vapi'), { recursive: true });
   const log = [];
 
-  for (const item of ITEMS) {
-    const raw = await fetchFromVapi(item.type, item.id, apiKey);
-    const orgIds = findOrgIds(raw);
-    const clean = redact(raw, "", log, orgIds);
+  // 1. Download everything first (GET requests only).
+  const downloads = [];
+  for (const item of ITEMS) downloads.push({ item, raw: await fetchFromVapi(item.type, item.id, apiKey) });
+
+  // 2. Collect what to hide from ALL items, so e.g. the transfer tool's phone
+  //    number is also hidden if it appears in the assistant's prompt.
+  const orgIds = new Set();
+  const transferDigits = new Set();
+  for (const { raw } of downloads) {
+    findOrgIds(raw, orgIds);
+    findTransferNumbers(raw, transferDigits);
+  }
+
+  // 3. Redact and save each item.
+  for (const { item, raw } of downloads) {
+    const clean = redact(raw, '', log, orgIds, false, transferDigits);
     log.forEach((entry) => (entry.file = entry.file || `vapi/${item.file}`));
 
     fs.writeFileSync(path.join(ROOT, 'vapi', item.file), JSON.stringify(clean, null, 2) + '\n');

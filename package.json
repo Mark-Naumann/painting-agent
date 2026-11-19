@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "export": "node scripts/export-vapi.js",
-    "check": "node scripts/check-secrets.js"
+    "check": "node scripts/check-secrets.js",
+    "test": "node --test scripts/*.test.js"
   },
   "license": "UNLICENSED"
 }
