@@ -1,18 +1,23 @@
 # Sam — AI Phone Receptionist for Naumann Painting
 
-**Sam answers every call for a small painting company, books the lead, handles the awkward
-calls a human receptionist would, and emails the owner a clean summary before he's off the ladder.**
+Demo built for my dad's painting company in St. Peters, MO (the owner, Mark Naumann, is my
+dad). Not yet on the business's real phone line. Putting it there is the next step.
+
+**Sam is an AI phone receptionist built for a small painting company: it answers the call,
+takes the lead, handles the awkward calls a human receptionist would, and emails the owner
+a clean summary.**
 
 🎬 **Demo video:** coming soon
 
-**Current version:** Sam **v14** on Vapi (Nov 19, 2026) · **Call review:** every call is graded automatically ([call-analyzer](https://github.com/Mark-Naumann/call-analyzer))
+**Current version:** Sam **v14** on Vapi (Nov 18, 2026, Mountain Time) · **Call review:** every call is graded automatically ([call-analyzer](https://github.com/Mark-Naumann/call-analyzer))
 
 ---
 
 ## What it does (from the caller's side)
 
-You call Naumann Painting (pronounced "Nawman", and Sam says it that way). Sam picks up,
-sounding like a friendly front-desk person, and:
+When you call Sam's test line (not the business's real number), Sam picks up for Naumann
+Painting (pronounced "Nawman", and Sam says it that way), sounding like a friendly
+front-desk person, and:
 
 1. Asks **exactly one question per turn**: what you need painted (interior, exterior, cabinets,
    trim, deck…), where (address or town), when you'd like it done, how you heard about
@@ -68,14 +73,14 @@ End-of-call report ──► Make webhook ──┬─► email 1: the lead, to 
 - **No custom server.** Everything runs on Vapi and Make (a no-code automation tool).
 - **Cost-aware:** only the *end-of-call report* is sent to Make, not every call event,
   so each call costs one Make run.
-- **Config as code:** the live Vapi setup is exported into this repo, so prompt and
+- **Config as code:** the current Vapi setup is exported into this repo, so prompt and
   voice changes are reviewed and versioned like normal code.
 - **Better hearing:** the transcriber has custom vocabulary for local names (Naumann,
   O'Fallon, St. Peters, St. Charles, Wentzville) and smart endpointing (knows when the
   caller has finished talking).
 - **Known Vapi issue:** publishing from the assistant editor can silently detach the
   structured outputs. After every publish I re-attach them and check the next review email
-  isn't blank ([incident write-up](https://github.com/Mark-Naumann/call-analyzer)).
+  isn't blank ([incident write-up](https://github.com/Mark-Naumann/call-analyzer/blob/main/examples/03-incident-review-silently-detached.md)).
 
 ### What's in this repo
 
@@ -119,6 +124,7 @@ See [`CHANGELOG.md`](CHANGELOG.md). Highlights:
 
 ## What I'd do next
 
+- **Go live:** put Sam on the business's real phone line.
 - **Calendar booking:** let Sam offer real estimate time slots (e.g. Google Calendar) instead of only a callback.
 - **CRM instead of email:** send leads into a CRM or spreadsheet so nothing gets lost in an inbox.
 - **Text confirmation:** send the caller an SMS summary after the call.
@@ -143,5 +149,5 @@ Needs Node.js 18+. No packages to install. `.env` is in `.gitignore` and is neve
 |---|---|
 | [transit-agent](https://github.com/Mark-Naumann/transit-agent) | Jordan, my second voice agent (transit customer service, live bus tools) |
 | [transit-sim](https://github.com/Mark-Naumann/transit-sim) | The simulated bus system and API Jordan's tools call |
-| [call-analyzer](https://github.com/Mark-Naumann/call-analyzer) | The AI call quality review that grades every call, with real findings |
+| [call-analyzer](https://github.com/Mark-Naumann/call-analyzer) | The AI call quality review that grades every call, with findings from test calls |
 | [call-analytics](https://github.com/Mark-Naumann/call-analytics) | Python + SQLite monitoring for both agents (quality, transfers, tool errors, dead air, cost) |
